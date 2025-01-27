@@ -7,3 +7,5 @@ Additionally, as a warm up/practice, I've implemented an ANN for the XOR functio
 The firstProject folder has the solution where I used torch library to build the network.
 The secondProject folder will contain the final product, an ANN built from scratch, trained and tested on the MNIST dataset.
 This folder already contains an implementation for a XOR ANN, as mentioned above in the document.
+
+I aim to provide thorough documentation throughout the code to make the implementation as clear and understandable as possible.
