@@ -137,23 +137,19 @@ class MNISTNeuralNetwork:
         self.hidden_2_biases -= self.lr * grad_hidden_2
         self.hidden_1_biases -= self.lr * grad_hidden_1
         
-    def train(self, epochs, training_data, num_of_iterations):
+    def train(self, epochs, training_data):
         """
             Trains the network for a given number of epochs using the training dataset.
             After forwarding an image, we calculate the loss, and propagate backwards, with the functions implemented and documented above.
         """
         for epoch in range(epochs):
-            i = 0
             loss_per_epoch = 0.00
             for image, label in training_data:
                 expected = self.one_hot_encode(label=label)
                 output = self.forward(image)
                 self.backward(expected=expected, predicted=output, input_values=image)
                 loss_per_epoch += self.cross_entropy_loss(expected=expected, predicted=output)
-                i += 1
-                if i == num_of_iterations:
-                    break
-            print(f"Loss at epoch {epoch + 1}: {loss_per_epoch / num_of_iterations:.4f}")
+            print(f"Loss at epoch {epoch + 1}: {loss_per_epoch / len(training_data):.4f}")
 
 """
     Finally, for the testing part we initialize the hyperparameters first.
@@ -167,8 +163,7 @@ hidden_1 = 128
 hidden_2 = 64
 output_nodes = 10
 epochs = 10
-num_of_iterations = 6000
-test_iterations = 10000
+test_iterations = 1000
 correct = 0
 learning_rate = 0.01
 
@@ -183,9 +178,9 @@ model = MNISTNeuralNetwork(input_nodes=input_nodes, hidden_1_nodes=hidden_1, hid
 mnist_url = "https://www.openml.org/data/get_csv/52667/mnist_784.arff"
 images, labels = convert(mnist_url)
 
-training_data = zip(images, labels)
+training_data = list(zip(images, labels))
         
-model.train(epochs=epochs, training_data=training_data, num_of_iterations=num_of_iterations)
+model.train(epochs=epochs, training_data=training_data)
 
 i = 0
 
