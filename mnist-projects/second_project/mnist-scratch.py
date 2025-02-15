@@ -34,7 +34,7 @@ class MNISTNeuralNetwork:
             5 - output_nodes, number of output nodes -> numbers from 0 to 9
             
             We'll also initialize the weights between the layer, and the biases for the hidden and output layers.
-            For the initialization of the weights, I used Xavier Initialization to ensure stable learning.
+            For the initialization of the weights, I used He Initialization to ensure stable learning.
         """
         self.input_nodes = input_nodes
         self.hidden_1_nodes = hidden_1_nodes
@@ -42,9 +42,9 @@ class MNISTNeuralNetwork:
         self.output_nodes = output_nodes
         self.lr = lr
         
-        self.input_to_hidden_weights = np.random.randn(self.input_nodes, self.hidden_1_nodes) * self.xavier_initialization(self.input_nodes)
-        self.hidden_1_to_2_weights = np.random.randn(self.hidden_1_nodes, self.hidden_2_nodes) * self.xavier_initialization(self.hidden_1_nodes)
-        self.hidden_2_to_output_weights = np.random.randn(self.hidden_2_nodes, self.output_nodes) * self.xavier_initialization(self.hidden_2_nodes)
+        self.input_to_hidden_weights = np.random.randn(self.input_nodes, self.hidden_1_nodes) * self.he_initialization(self.input_nodes)
+        self.hidden_1_to_2_weights = np.random.randn(self.hidden_1_nodes, self.hidden_2_nodes) * self.he_initialization(self.hidden_1_nodes)
+        self.hidden_2_to_output_weights = np.random.randn(self.hidden_2_nodes, self.output_nodes) * self.he_initialization(self.hidden_2_nodes)
         
         self.hidden_1_biases = np.zeros(self.hidden_1_nodes)
         self.hidden_2_biases = np.zeros(self.hidden_2_nodes)
@@ -68,7 +68,7 @@ class MNISTNeuralNetwork:
         """
         return np.where(layer_nodes > 0, 1, 0)
         
-    def xavier_initialization(self, layer_nodes):
+    def he_initialization(self, layer_nodes):
         """
             This metod is used for better weight initialization.
             It scales the weights based on the number of neurons in the previous layer.
