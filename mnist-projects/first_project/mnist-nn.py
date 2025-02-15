@@ -22,14 +22,16 @@ class FirstNeuralNetwork(nn.Module):
     def __init__(self):
         super(FirstNeuralNetwork, self).__init__()
         self.fc1 = nn.Linear(28*28, 128) ## input to hidden layer
-        self.fc2 = nn.Linear(128, 10) ## hidden layer to output layer
+        self.fc2 = nn.Linear(128, 64)
+        self.fc3 = nn.Linear(64, 10) ## hidden layer to output layer
         
     def forward(self, x):
         x = x.view(x.size(0), -1)
         ## x.size(i) returns the i. dimension's value (which is 64 in the context -> the batch size), while -1 combines the rest dimension into a one dimension array
         ## in this case its 28*28 -> we get a one dimensional array with the length of 784
         x = torch.relu(self.fc1(x)) ## activation function on hidden layer
-        x = self.fc2(x)
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
         return x
 
 ## hyperparameters used throughput the learning
